@@ -1,0 +1,20 @@
+name: CI Smoke
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Write build artifact
+        run: |
+          mkdir -p dist
+          echo "ci-smoke-lab-2 smoke build" > dist/build.txt
+          echo "generated at $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> dist/build.txt
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-build
+          path: dist/build.txt
+          if-no-files-found: error
